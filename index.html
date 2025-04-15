@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prom Surprise</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: pink;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Courier New', Courier, monospace;
+      color: white;
+      overflow: hidden;
+      position: relative;
+      padding: 1rem;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 1;
+      max-width: 100%;
+    }
+
+    #startBtn {
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      background-color: black;
+      color: white;
+      border: 2px solid white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .blast {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, #ff4081, transparent, #00ffff, transparent, #ffff00);
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0);
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      transition: all 0.8s ease-out;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .showBlast {
+      opacity: 1;
+      transform: scale(10);
+    }
+
+    #message {
+      margin-top: 2rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .typewriter {
+      font-size: 2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid white;
+      width: 0;
+      color: #39ff14;
+      animation: typing 1.5s steps(60) forwards;
+    }
+
+    .signature {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 0 10px white;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1 }
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: rise 10s linear infinite;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(0);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+
+    .emoji-bg {
+      position: absolute;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .typewriter {
+        font-size: 1.3rem;
+      }
+
+      .signature {
+        font-size: 1rem;
+      }
+
+      #startBtn {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button id="startBtn">Click here</button>
+    <div class="blast" id="blast"></div>
+    <div id="message" class="hidden">
+      <p class="typewriter">Tanuja Ma'am, will you please be my prom partner? 🧸🍫💖</p>
+      <p class="signature">– <span style="color: white; font-weight: bold;">Onkar</span></p>
+    </div>
+  </div>
+
+  <script>
+    const btn = document.getElementById("startBtn");
+    const blast = document.getElementById("blast");
+    const message = document.getElementById("message");
+
+    btn.onclick = () => {
+      blast.classList.add("showBlast");
+      btn.remove();
+      setTimeout(() => {
+        blast.classList.remove("showBlast");
+        message.classList.remove("hidden");
+      }, 1000);
+    };
+
+    function createBubbles() {
+      for (let i = 0; i < 30; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.style.left = Math.random() * 100 + 'vw';
+        bubble.style.width = bubble.style.height = Math.random() * 8 + 4 + 'px';
+        bubble.style.animationDuration = Math.random() * 5 + 5 + 's';
+        document.body.appendChild(bubble);
+      }
+    }
+
+    function createEmojis() {
+      const emojis = ['🧸', '🍫', '💝', '💐', '🎀'];
+      for (let i = 0; i < 20; i++) {
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji-bg');
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.animationDuration = Math.random() * 5 + 5 + 's';
+        document.body.appendChild(emoji);
+      }
+    }
+
+    createBubbles();
+    createEmojis();
+  </script>
+</body>
+</html>
